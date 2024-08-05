@@ -3,10 +3,9 @@ namespace NgClientTransfer
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-
         public Worker(ILogger<Worker> logger)
         {
-            _logger = logger;
+            _logger = logger; 
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -16,10 +15,10 @@ namespace NgClientTransfer
                 if (_logger.IsEnabled(LogLevel.Information))
                 {
                     _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-
-                    // TODO Fazer o acionamento da regra e negócio.
+                    
+                    // TODO Fazer o acionamento da regra e negï¿½cio.
                 }
-                await Task.Delay(1000, stoppingToken);
+                await Task.Delay(600000, stoppingToken);
             }
         }
     }

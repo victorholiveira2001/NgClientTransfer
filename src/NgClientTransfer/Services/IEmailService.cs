@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NgClientTransfer.Services
 {
-    internal interface IEmailService
+    public interface IEmailService
     {
         public void DisparaEmail(string conteudo, List<string> emails);
     }
