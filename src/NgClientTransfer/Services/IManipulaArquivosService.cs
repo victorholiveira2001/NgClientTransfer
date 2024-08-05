@@ -10,6 +10,6 @@ namespace NgClientTransfer.Services
     {
         public void VerificaArquivos();
         public void MovimentaArquivos(string[] arquivos);
-        public void ConfereExisteArquivos(string[] arquivos);
+        public void ConfereExisteArquivos();
     }
 }
