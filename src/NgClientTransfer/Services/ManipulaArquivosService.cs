@@ -1,50 +1,62 @@
-﻿using System.Globalization;
-using System.Linq;
-using System.Numerics;
-using NgClientTransfer.Services;
-
-namespace NgClientTransfer.Services
+﻿namespace NgClientTransfer.Services
 {
     internal class ManipulaArquivosService : IManipulaArquivosService
     {
-        private readonly ProcedureService _procedureService;
-        private readonly ServiceManagerService _serviceManager;
+        private readonly IProcedureService _procedureService;
+        private readonly IServiceManagerService _serviceManager;
+        private readonly IEmailService _emailService;
+
         private string Edi = Environment.GetEnvironmentVariable("EDI");
         private string NgClientOut = Environment.GetEnvironmentVariable("NgClientOut");
         private string NgClientSent = Environment.GetEnvironmentVariable("NgClientSent");
-        private DateTime Data { get; set; }
+        private string Data { get; set; }
 
-        public ManipulaArquivosService(ProcedureService procedureService, ServiceManagerService serviceManager)
+        public ManipulaArquivosService(IProcedureService procedureService, IServiceManagerService serviceManager, IEmailService emailService)
         {
             _procedureService = procedureService;
             _serviceManager = serviceManager;
+            _emailService = emailService;
         }
 
-        public void VerificaArquivos()
+        public async void VerificaArquivos()
         {
             while (true)
             {
-                Data = DateTime.ParseExact(DateTime.Now.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
-                string[] arquivos = Directory.GetFiles(Edi).Select(Path.GetFileName).ToArray();
-                MovimentaArquivos(arquivos);
-
-                if (DateTime.Now.ToString("HH:mm") == "05:00")
+                try
                 {
-                    _procedureService.ExecutarProcedure();
-                }
-                else if (DateTime.Now.ToString("HH:mm") == "19:00")
-                {
-                    ConfereExisteArquivos();
-                }
+                    Data = DateTime.Now.ToString("yyyyMMdd");
+                    string[] arquivos = Directory.GetFiles(Edi).Select(Path.GetFileName).ToArray();
+                    MovimentaArquivos(arquivos);
 
-                Thread.Sleep(60000);
+                    if (DateTime.Now.ToString("HH:mm") == "05:00")
+                    {
+                        _procedureService.ExecutarProcedure();
+                    }
+                    // Validar novamente, caso haja algum erro de importação.
+                    else if (DateTime.Now.ToString("HH:mm") == "19:00")
+                    {
+                        ConfereExisteArquivos();
+                    }
+
+                    Thread.Sleep(60000);
+                }
+                catch (Exception ex)
+                {
+                    _emailService.DisparaEmail("Erro Neogrid Client Tranfer",
+                       $"""
+                        Ocorreu um erro durante a verificação de arquivos.
+
+                        Erro: {ex}.
+
+                        Caso necessário, entre em contato com o desenvolvedor do sistema.
+                        """);
+                }                
             }
         }
 
         public void MovimentaArquivos(string[] arquivos)
         {
-
-            Data = DateTime.ParseExact(DateTime.Now.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
+            Data = DateTime.Now.ToString("yyyyMMdd");
             if (arquivos.Length >= 4)
             {
                 try
@@ -52,11 +64,11 @@ namespace NgClientTransfer.Services
                     foreach (var arquivo in arquivos)
                     {
                         //Se menor que 17, devo excluir para não dar erro na comparação de datas atralado ao nome.
-                        if (arquivo.Length < 17) 
+                        if (arquivo.Length < 17)
                         {
                             File.Delete($@"{Edi}\{arquivo}");
                         }
-                        else if (arquivo.Substring(9, 8) == Data.ToString() || 
+                        else if (arquivo.Substring(9, 8) == Data.ToString() ||
                                  arquivo.Substring(8, 8) == Data.ToString())
                         {
                             File.Move($@"{Edi}\{arquivo}",
@@ -73,8 +85,14 @@ namespace NgClientTransfer.Services
                 }
                 catch (Exception ex)
                 {
-                        // TODO Implementar mensageria.
-                        // TODO Tratamento, se houver.
+                    _emailService.DisparaEmail("Erro Neogrid Client Tranfer",
+                        $"""
+                            Ocorreu um erro durante a execução da transferência de arquivos.
+
+                            Erro: {ex.Message}.
+
+                            Caso necessário, entre em contato com o desenvolvedor do sistema.
+                         """);
                 }
             }
         }
@@ -82,8 +100,7 @@ namespace NgClientTransfer.Services
 
         public void ConfereExisteArquivos()
         {
-            Data = DateTime.ParseExact(DateTime.Now.ToString(), "yyyyMMdd", CultureInfo.InvariantCulture);
-
+            Data = DateTime.Now.ToString("yyyyMMdd");
 
             var arquivos = Directory.GetFiles(NgClientSent)
                 .Where(arquivo =>
@@ -97,7 +114,7 @@ namespace NgClientTransfer.Services
             if (arquivos.Length < 4)
             {
                 _procedureService.ExecutarProcedure();
-            }
+            }            
         }
     }
 }

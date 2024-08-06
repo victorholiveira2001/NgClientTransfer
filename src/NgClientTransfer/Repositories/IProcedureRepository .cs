@@ -2,7 +2,7 @@
 
 namespace NgClientTransfer.Repositories
 {
-    internal interface IProcedureRepository
+    public interface IProcedureRepository
     {
         void ConexaoDb(string connectionString, OracleCredential oracleCredential);
     }

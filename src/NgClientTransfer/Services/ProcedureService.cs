@@ -1,11 +1,10 @@
 ﻿using NgClientTransfer.Repositories;
 using Oracle.ManagedDataAccess.Client;
-using System.Runtime.CompilerServices;
 using System.Security;
 
 namespace NgClientTransfer.Services
 {
-    internal class ProcedureService : IProcedureService
+    public class ProcedureService : IProcedureService
     {
         private readonly IProcedureRepository _procedureRepository;
         private readonly IConfiguration _configuration;

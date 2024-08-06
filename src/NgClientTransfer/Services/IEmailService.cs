@@ -8,6 +8,6 @@ namespace NgClientTransfer.Services
 {
     public interface IEmailService
     {
-        public void DisparaEmail(string conteudo, List<string> emails);
+        public void DisparaEmail(string assunto, string conteudo);
     }
 }
