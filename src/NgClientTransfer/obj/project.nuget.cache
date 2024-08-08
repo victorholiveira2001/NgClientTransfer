@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qJevHA7y5nQ=",
+  "dgSpecHash": "MuaO6uZu5sE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\victor.oliveira\\Documents\\Projetos\\NgClientTransfer\\src\\NgClientTransfer\\NgClientTransfer.csproj",
+  "projectFilePath": "C:\\Users\\victor.oliveira\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\NgClientTransfer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\victor.oliveira\\.nuget\\packages\\microsoft.extensions.configuration\\8.0.0\\microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "C:\\Users\\victor.oliveira\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\8.0.0\\microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",

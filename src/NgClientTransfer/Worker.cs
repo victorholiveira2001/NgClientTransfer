@@ -5,8 +5,8 @@ namespace NgClientTransfer
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly IManipulaArquivosService _manipulaArquivosService;
-        public Worker(ILogger<Worker> logger, IManipulaArquivosService manipulaArquivosService)
+        private readonly ITransfereArquivosService _manipulaArquivosService;
+        public Worker(ILogger<Worker> logger, ITransfereArquivosService manipulaArquivosService)
         {
             _logger = logger;
             _manipulaArquivosService = manipulaArquivosService;
@@ -14,17 +14,12 @@ namespace NgClientTransfer
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            if (_logger.IsEnabled(LogLevel.Information))
             {
-                if (_logger.IsEnabled(LogLevel.Information))
-                {
-                    _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+                _logger.LogInformation("Serviço iniciado as: {time}", DateTimeOffset.Now);
 
-                    _manipulaArquivosService.VerificaArquivos();
-                    
-                    // TODO Fazer o acionamento da regra e neg�cio.
-                }
-                await Task.Delay(600000, stoppingToken);
+                _manipulaArquivosService.VerificaArquivos();
+                
             }
         }
     }

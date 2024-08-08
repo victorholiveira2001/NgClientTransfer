@@ -6,7 +6,7 @@ using NgClientTransfer.Services;
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<Worker>();
 
-builder.Services.AddSingleton<IManipulaArquivosService, ManipulaArquivosService>();
+builder.Services.AddSingleton<ITransfereArquivosService, TransfereArquivos>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddTransient<IProcedureService, ProcedureService>();
 builder.Services.AddTransient<IServiceManagerService, ServiceManagerService>();
