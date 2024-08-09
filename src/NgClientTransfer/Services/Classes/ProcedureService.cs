@@ -7,23 +7,36 @@ namespace NgClientTransfer.Services
     public class ProcedureService : IProcedureService
     {
         private readonly IProcedureRepository _procedureRepository;
-        private readonly IConfiguration _configuration;
-
-        public ProcedureService(IProcedureRepository procedureRepository, IConfiguration configuration)
+        private readonly IExceptionService _exceptionService;
+        public ProcedureService(IProcedureRepository procedureRepository, IExceptionService exceptionService)
         {
             _procedureRepository = procedureRepository;
-            _configuration = configuration;
+            _exceptionService = exceptionService;
         }
 
         public void ExecutarProcedure()
         {
-            var connectionString = _configuration["DB_CONNECTION_STRING"];
-            var username = _configuration["DB_USERNAME"];
-            var password = _configuration["DB_PASSWORD"];
+            try
+            {
+                var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
+                var username = Environment.GetEnvironmentVariable("DB_USER");
+                var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
-            var oraclCredential = CreateOracleCredential(username, password);
+                var oraclCredential = CreateOracleCredential(username, password);
 
-            _procedureRepository.ConexaoDb(connectionString, oraclCredential);
+                _procedureRepository.ConexaoDb(connectionString, oraclCredential);
+
+            }
+            catch (InvalidOperationException ioex)
+            {
+                _exceptionService.TratarExcessao(ioex);
+            }
+            catch (OracleException oex)
+            {
+                _exceptionService.TratarExcessao(oex);
+            }
+            
+            
         }
 
 

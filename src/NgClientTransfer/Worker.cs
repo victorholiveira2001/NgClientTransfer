@@ -5,8 +5,8 @@ namespace NgClientTransfer
     public class Worker : BackgroundService
     {
         private readonly ILogger<Worker> _logger;
-        private readonly ITransfereArquivosService _manipulaArquivosService;
-        public Worker(ILogger<Worker> logger, ITransfereArquivosService manipulaArquivosService)
+        private readonly IMovimentadorService _manipulaArquivosService;
+        public Worker(ILogger<Worker> logger, IMovimentadorService manipulaArquivosService)
         {
             _logger = logger;
             _manipulaArquivosService = manipulaArquivosService;
@@ -18,7 +18,7 @@ namespace NgClientTransfer
             {
                 _logger.LogInformation("Serviço iniciado as: {time}", DateTimeOffset.Now);
 
-                _manipulaArquivosService.VerificaArquivos();
+                _manipulaArquivosService.GerenciadorDeTransferencia();
                 
             }
         }

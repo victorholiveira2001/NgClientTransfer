@@ -1,15 +1,17 @@
-﻿namespace NgClientTransfer.Services
+﻿/*using System.ComponentModel.DataAnnotations;
+
+namespace NgClientTransfer.Services
 {
-    internal class TransfereArquivos : ITransfereArquivosService
+    internal class Movimentador : IMovimentadorService
     {
         #region Dependences Injection
         private readonly IProcedureService _procedureService;
         private readonly IServiceManagerService _serviceManager;
         private readonly IEmailService _emailService;
-        private readonly IVerificaArquivosService _verificaArquivos;
+        private readonly IVerificadorService _verificaArquivos;
         private string Data { get; set; }
 
-        public TransfereArquivos(IProcedureService procedureService, IServiceManagerService serviceManager, IEmailService emailService, IVerificaArquivosService verificaArquivos)
+        public Movimentador(IProcedureService procedureService, IServiceManagerService serviceManager, IEmailService emailService, IVerificadorService verificaArquivos)
         {
             _procedureService = procedureService;
             _serviceManager = serviceManager;
@@ -25,7 +27,6 @@
             while (true)
             {
                 Data = DateTime.Now.ToString("yyyyMMdd");
-
                 
                 _verificaArquivos.VerificaDiretorios();
                 MovimentaArquivos();
@@ -56,35 +57,42 @@
 
                 if (arquivos.Length >= 4)
                 {
-                    foreach (var arquivo in arquivos)
-                    {
-                        //Se menor que 17, devo excluir para não dar erro na comparação de datas atrelado ao nome do arquivo.
-                        if (arquivo.Length < 17)
-                        {
-                            File.Delete($@"{Edi}\{arquivo}");
-                        }
-                        else if (arquivo.Substring(9, 8) == DateTime.Now.ToString("yyyyMMdd") ||
-                                 arquivo.Substring(8, 8) == DateTime.Now.ToString("yyyyMMdd"))
-                        {
-                            File.Move($@"{Edi}\{arquivo}",
-                                      $@"{Out}\{arquivo}");
-                        }
-                        else
-                        {
-                            File.Delete($@"{Edi}\{arquivo}");
-                        }
-                    }
+                    ProcessaArquivos();
 
                     _serviceManager.IniciarServico();
                 }  
             }
-                catch (Exception ex)
+            catch (Exception ex)
+            {
+                var exception = new Exceptions(_emailService, _serviceManager);
+                exception.TratarExcessao(ex);
+            }
+        }
+
+        #endregion
+
+        #region Processa arquivos
+        public void ProcessaArquivos(string[] arquivos)
+        {
+            Data = DateTime.Now.ToString("yyyyMMdd");
+            foreach (var arquivo in arquivos)
+            {
+                //Se menor que 17, devo excluir para não dar erro na comparação de datas atrelado ao nome do arquivo.
+                if (arquivo.Length < 17)
                 {
-                    var exception = new Exceptions(_emailService, _serviceManager);
-                    exception.TratarExcessao(ex);
+                    File.Delete(Path.Combine(Edi, arquivo));
                 }
+                else if (arquivo.Substring(9, 8) == Data || arquivo.Substring(8, 8) == Data)
+                {
+                    File.Move(Path.Combine(Edi, arquivo), Path.Combine(Out, arquivo));
+                }
+                else
+                {
+                    File.Delete(Path.Combine(Edi, arquivo));
+                }
+            }
         }
 
         #endregion
     }
-}
+}*/

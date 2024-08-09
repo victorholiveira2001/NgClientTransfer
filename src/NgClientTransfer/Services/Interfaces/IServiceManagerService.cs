@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NgClientTransfer.Services
 {
-    internal interface IServiceManagerService
+    public interface IServiceManagerService
     {
         public void IniciarServico();
         public void PararServico();

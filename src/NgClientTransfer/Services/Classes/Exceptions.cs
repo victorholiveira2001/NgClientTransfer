@@ -1,7 +1,9 @@
 
+using Oracle.ManagedDataAccess.Client;
+
 namespace NgClientTransfer.Services
 {
-    class Exceptions : IExceptions
+    class Exceptions : IExceptionService
     {
         private readonly IEmailService _emailService;
         private readonly IServiceManagerService _serviceManager;
@@ -17,16 +19,29 @@ namespace NgClientTransfer.Services
         {
             if (ex is InvalidOperationException ioex)
             {
-                _emailService.DisparaEmail("Erro na transferência",
-                        $"""
-                            Ocorreu um erro durante a execução da transferência de arquivos.
+            _emailService.DisparaEmail("Erro na transferência",
+                $"""
+                    Ocorreu um erro durante a execução da transferência de arquivos.
 
-                            Erro: {ioex.Message}.
+                    Erro: {ioex.Message}.
 
-                            Caso necessário, entre em contato com o desenvolvedor do sistema.
-                         """);
-                         // Encerrando o serviço até o problema ser solucionado pelo usuário (Variáveis serem criadas)
-                         _serviceManager.EncerrarHost();
+                    Caso necessário, entre em contato com o desenvolvedor do sistema.
+                    """);
+                    // Encerrando o serviço até o problema ser solucionado pelo usuário (Variáveis serem criadas)
+                    _serviceManager.EncerrarHost();
+            }
+            else if (ex is OracleException oex)
+            {
+            _emailService.DisparaEmail("Erro na transferência",
+                $"""
+                    Ocorreu um erro durante a execução do banco de dados oracle.
+
+                    Erro: {oex.Message}.
+
+                    Caso necessário, entre em contato com o desenvolvedor do sistema.
+                    """);
+                    // Encerrando o serviço até o problema ser solucionado pelo usuário (Variáveis serem criadas)
+                    _serviceManager.EncerrarHost();
             }
             else
             {

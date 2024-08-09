@@ -1,6 +1,6 @@
 namespace NgClientTransfer.Services
 {
-    public interface IExceptions
+    public interface IExceptionService
     {
         public void TratarExcessao(Exception ex);
     }

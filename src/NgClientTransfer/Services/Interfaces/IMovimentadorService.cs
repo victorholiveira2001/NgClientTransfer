@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NgClientTransfer.Services
 {
-    public interface ITransfereArquivosService
+    public interface IMovimentadorService
     {
-        public void VerificaArquivos();
-        public void MovimentaArquivos();
+        public void GerenciadorDeTransferencia();
+        public void TransfereArquivos();
     }
 }
