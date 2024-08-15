@@ -20,3 +20,4 @@ TestResults/
 # Others
 *.temp
 *.tmp
+NgClientTransfer/src/NgClientTransfer/smtpSettings.json

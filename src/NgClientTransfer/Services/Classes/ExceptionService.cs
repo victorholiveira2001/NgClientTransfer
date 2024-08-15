@@ -3,12 +3,12 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace NgClientTransfer.Services
 {
-    class Exceptions : IExceptionService
+    class ExceptionService : IExceptionService
     {
         private readonly IEmailService _emailService;
         private readonly IServiceManagerService _serviceManager;
 
-        public Exceptions(IEmailService emailService, IServiceManagerService serviceManager)
+        public ExceptionService(IEmailService emailService, IServiceManagerService serviceManager)
         {
             _emailService = emailService;
             _serviceManager = serviceManager;
