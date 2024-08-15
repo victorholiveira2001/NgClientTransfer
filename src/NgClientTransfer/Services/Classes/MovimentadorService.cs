@@ -9,13 +9,15 @@ namespace NgClientTransfer.Services
         private readonly IProcedureService _procedureService;
         private readonly IVerificadorService _verificadorService;
         private readonly IExceptionService _exceptionService;
+        private readonly IServiceManagerService _serviceManager;
         string? Data { get; set; }
 
-        public MovimentadorService(IProcedureService procedureService, IVerificadorService verificadorService, IExceptionService exceptionService)
+        public MovimentadorService(IProcedureService procedureService, IVerificadorService verificadorService, IExceptionService exceptionService, IServiceManagerService serviceManager)
         {
             _procedureService = procedureService;
             _verificadorService = verificadorService;
             _exceptionService = exceptionService;
+            _serviceManager = serviceManager;
         }
 
         #region Gerenciador de transferência
@@ -55,6 +57,10 @@ namespace NgClientTransfer.Services
                         else
                             File.Delete(Path.Combine(ediPath, arquivo));
                     }
+
+                    _serviceManager.IniciarServico();
+                    Thread.Sleep(1800000);
+                    _serviceManager.PararServico();
                 }
             }   
             catch(InvalidOperationException ioex)
