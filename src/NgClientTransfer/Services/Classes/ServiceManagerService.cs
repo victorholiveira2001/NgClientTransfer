@@ -12,6 +12,7 @@ namespace NgClientTransfer.Services
             _applicationLifetime = applicationLifetime;
         }
 
+        #region Iniciar Serviço
         public void IniciarServico()
         {
             var sc = new ServiceController("ngclient");
@@ -23,7 +24,9 @@ namespace NgClientTransfer.Services
                 PararServico();
             }
         }
+        #endregion
 
+        #region Parar Serviço
         public void PararServico()
         {
             var sc = new ServiceController("ngclient");
@@ -33,10 +36,13 @@ namespace NgClientTransfer.Services
                 sc?.Stop();
             }
         }
+        #endregion
 
+        #region Encerra Host Lifetime
         public void EncerrarHost()
         {
             _applicationLifetime.StopApplication();
         }
+        #endregion
     }
 }

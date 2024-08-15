@@ -9,7 +9,8 @@ namespace NgClientTransfer.Services
             _procedureService = procedureService;
         }
 
-        public void VerificaDiretorios(string ediPath, string outPath, string sentPath)
+        #region Verificador de diretórios
+        public void VerificaDiretorios(string ediPath, string outPath)
         {
             if (!Directory.Exists(ediPath))
             {
@@ -19,10 +20,7 @@ namespace NgClientTransfer.Services
             {
                 Directory.CreateDirectory(outPath);
             }
-            if (!Directory.Exists(sentPath))
-            {
-                Directory.CreateDirectory(sentPath);
-            }
         }
+        #endregion
     }
 }

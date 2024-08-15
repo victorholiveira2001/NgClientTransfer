@@ -18,6 +18,7 @@ namespace NgClientTransfer.Services
             _exceptionService = exceptionService;
         }
 
+        #region Gerenciador de transferência
         public void GerenciadorDeTransferencia()
         {
             while (true)
@@ -31,6 +32,7 @@ namespace NgClientTransfer.Services
                 }
             }
         }
+        #endregion
 
         #region Transfere arquivo
         public void TransfereArquivos()
@@ -39,28 +41,22 @@ namespace NgClientTransfer.Services
             {        
                 string ediPath = Environment.GetEnvironmentVariable("EDI") ?? throw new InvalidOperationException("Não foi possível localizar a variável de ambiente \"EDI\".");
                 string outPath = Environment.GetEnvironmentVariable("OUT") ?? throw new InvalidOperationException("Não foi possível localizar a variável de ambiente \"OUT\".");
-                string sentPath = Environment.GetEnvironmentVariable("SENT") ?? throw new InvalidOperationException("Não foi possível localizar a variável de ambiente \"OUT\".");
                 
-                _verificadorService.VerificaDiretorios(ediPath, outPath, sentPath);
+                _verificadorService.VerificaDiretorios(ediPath, outPath);
                 
                 string[] arquivos = Directory.GetFiles(ediPath).Select(Path.GetFileName).ToArray();
 
-                foreach (var arquivo in arquivos)
+                if (arquivos.Length >= 4)
                 {
-                    if (arquivo.Length < 17)
+                    foreach (var arquivo in arquivos)
                     {
-                        File.Delete(arquivo);
-                    }
-                    else if (arquivo.Substring(9,8) == Data || arquivo.Substring(8,8) == Data)
-                    {
-                        File.Move(Path.Combine(ediPath, arquivo), Path.Combine(outPath, arquivo));
-                    }
-                    else
-                    {
-                        File.Delete(arquivo);
+                        if (arquivo.Contains(Data))
+                            File.Move(Path.Combine(ediPath, arquivo), Path.Combine(outPath, arquivo));
+                        else
+                            File.Delete(Path.Combine(ediPath, arquivo));
                     }
                 }
-            }
+            }   
             catch(InvalidOperationException ioex)
             {
                 _exceptionService.TratarExcessao(ioex);

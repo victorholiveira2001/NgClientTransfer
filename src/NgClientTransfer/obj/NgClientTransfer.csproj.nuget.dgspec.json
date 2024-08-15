@@ -1,25 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\victor.oliveira\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\NgClientTransfer.csproj": {}
+    "C:\\Users\\Victor\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\NgClientTransfer.csproj": {}
   },
   "projects": {
-    "C:\\Users\\victor.oliveira\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\NgClientTransfer.csproj": {
+    "C:\\Users\\Victor\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\NgClientTransfer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\victor.oliveira\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\NgClientTransfer.csproj",
+        "projectUniqueName": "C:\\Users\\Victor\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\NgClientTransfer.csproj",
         "projectName": "NgClientTransfer",
-        "projectPath": "C:\\Users\\victor.oliveira\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\NgClientTransfer.csproj",
-        "packagesPath": "C:\\Users\\victor.oliveira\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\victor.oliveira\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\obj\\",
+        "projectPath": "C:\\Users\\Victor\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\NgClientTransfer.csproj",
+        "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Victor\\Documents\\Projetos\\C#\\NgClientTransfer\\src\\NgClientTransfer\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\victor.oliveira\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -72,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

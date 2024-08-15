@@ -1,3 +1,22 @@
-/.vs
-/src/NgClientTransfer/bin
-/src/NgClientTransfer/obj
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Visual Studio workspace and reports
+.vs/
+TestResults/
+ 
+
+# IDEs
+.vscode/
+.id         
+
+# Others
+*.temp
+*.tmp

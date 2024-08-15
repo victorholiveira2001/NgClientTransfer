@@ -22,6 +22,7 @@ namespace NgClientTransfer.Services
             Port = int.TryParse(smtpConfig["SMTP:Port"], out var port) ? port : throw new ArgumentNullException(nameof(Port));
         }
 
+        #region Dispara Email
         public void DisparaEmail(string assunto, string conteudo)
         {
             var smtpClient = new SmtpClient(Host, Port)
@@ -32,9 +33,9 @@ namespace NgClientTransfer.Services
 
             var emails = new List<string>()
             {
-                "darkland212+ngclienttransfer@gmail.com"
-                //"osmar.oliveira@moreira.com.br",
-                //"mateus.araujo@moreira.com.br"
+                "example1@contoso.com",
+                "example2@contoso.com",
+                "example3@contoso.com"
             };
 
             foreach (var email in emails)
@@ -51,5 +52,6 @@ namespace NgClientTransfer.Services
                 smtpClient.Send(mailMessage);
             }
         }
+        #endregion
     }
 }

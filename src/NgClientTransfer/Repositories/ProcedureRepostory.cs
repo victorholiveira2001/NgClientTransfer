@@ -5,12 +5,13 @@ namespace NgClientTransfer.Repositories
 {
     internal class ProcedureRepostory : IProcedureRepository
     {
-        private readonly IEmailService _emailService;
-        public ProcedureRepostory(IEmailService emailService)
+        private readonly IExceptionService _exceptionService;
+        public ProcedureRepostory(IExceptionService exceptionService)
         {
-            _emailService = emailService;
+            _exceptionService = exceptionService;
         }
 
+        #region Conexão Bd
         public void ConexaoDb(string connectionString, OracleCredential oracleCredential)
         {
             using (var conexao = new OracleConnection(connectionString, oracleCredential))
@@ -27,16 +28,10 @@ namespace NgClientTransfer.Repositories
                 }
                 catch (OracleException oex)
                 {
-                    _emailService.DisparaEmail("Erro na execução da procedure",
-                    $"""
-                    Ocorreu um erro durante a execução da procedure.
-
-                    Erro: {oex.Message}.
-
-                    Caso necessário, entre em contato com o desenvolvedor do sistema.
-                    """);
+                    _exceptionService.TratarExcessao(oex);
                 }
             }
         }
+        #endregion
     }
 }

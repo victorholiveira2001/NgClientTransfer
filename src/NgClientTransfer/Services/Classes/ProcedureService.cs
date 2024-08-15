@@ -14,6 +14,7 @@ namespace NgClientTransfer.Services
             _exceptionService = exceptionService;
         }
 
+        #region Executa Procedure
         public void ExecutarProcedure()
         {
             try
@@ -35,11 +36,10 @@ namespace NgClientTransfer.Services
             {
                 _exceptionService.TratarExcessao(oex);
             }
-            
-            
         }
+        #endregion
 
-
+        #region Oracle Credential
         private OracleCredential CreateOracleCredential(string username, string password)
         {
             SecureString secPw = new SecureString();
@@ -52,6 +52,7 @@ namespace NgClientTransfer.Services
             secPw.MakeReadOnly();
             return new OracleCredential(username, secPw);
         }
+        #endregion
     }
 }
 
